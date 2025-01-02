@@ -3,35 +3,69 @@
 #### Video Demo: <URL HERE>
 
 #### Description:
+This project implements a conversational AI chatbot utilizing deep learning techniques, powered by PyTorch. The chatbot is designed to understand user input, classify it into predefined categories (intents), and provide contextually relevant responses. It features both text-based and voice-based interaction, allowing users to communicate through spoken language or typed commands.
 
-BabyAI is a foundational artificial intelligence framework aimed at simplifying the development of AI agents for a variety of tasks. This project demonstrates an easy-to-use, modular architecture that combines key principles from reinforcement learning, natural language processing, and robotics, enabling developers to create agents that can interact with and learn from their environments in an intuitive manner.
+The system uses Natural Language Processing (NLP) techniques such as tokenization, stemming, and bag-of-words representations to process and interpret user input. The neural network model classifies input into different intents, and based on the predicted intent, the chatbot selects and delivers an appropriate response. 
 
-## Key Features
+Key features include:
+- **Speech Recognition**: Converts user voice input into text using the `speech_recognition` library.
+- **Text-to-Speech**: Converts the chatbot's text response into speech using `pyttsx3`, providing an interactive experience.
+- **Neural Network Classifier**: A custom-built feed-forward neural network model classifies user input into predefined intents.
+- **Dynamic Response Generation**: The chatbot selects responses from a variety of predefined options for each intent.
 
-- **Modular Design**: Clear separation of components for easy customization and scalability.
-- **Support for Reinforcement Learning**: Implementations of popular RL algorithms for training AI agents.
-- **Natural Language Processing**: Language-based interfaces for specifying tasks and receiving feedback.
-- **Extensibility**: Built-in support for custom environments and agents.
+---
 
-## Project Structure
+## Table of Contents:
+- [Project Files Breakdown](#project-files-breakdown)
+- [Key Design Choices](#key-design-choices)
+- [Training and Model Evaluation](#training-and-model-evaluation)
+- [Usage](#usage)
+- [Future Improvements](#future-improvements)
+- [License](#license)
 
-This repository includes the following key components:
+---
 
-### AI
-- `agent.py`: Defines the core AI agent. This file contains the logic for interacting with the environment, learning from feedback, and making decisions based on the trained policy.
-- `model.py`: Contains the neural network models used by the AI agent for learning and decision-making. Includes pre-built architectures as well as support for custom model definitions.
+## Project Files Breakdown
 
-### Environments
-- `environment.py`: Implements the simulation environments where the AI agents operate. It provides the interface for defining new environments or extending existing ones.
-- `task_manager.py`: Manages tasks and objectives for agents, ensuring they are evaluated based on specific goals and metrics.
+### `main.py`
+This is the entry point of the chatbot. It manages the user interaction, including:
+1. **Listening to the User**: Captures voice input using the `Listen()` function from the `listen.py` module.
+2. **Preprocessing Input**: Tokenizes and vectorizes the input using a bag-of-words model.
+3. **Intent Classification**: The input is passed through the neural network model to predict the intent.
+4. **Response Generation**: Based on the predicted intent, a response is chosen from a predefined set and communicated back to the user via text-to-speech using the `Say()` function from the `speak.py` module.
 
-### Utilities
-- `config.py`: Contains configuration settings for the project, including hyperparameters for training, paths for saving models, and logging options.
-- `logger.py`: Implements logging functionality to track the progress of training and performance metrics.
+### `Brain.py`
+Contains the definition of the neural network used for intent classification. The network has three fully connected layers, with ReLU activations between the layers. It processes bag-of-words vectors and outputs a predicted intent label.
 
-### Training and Evaluation
-- `train.py`: The main script for training AI agents using reinforcement learning techniques. It supports various algorithms, including DQN, PPO, and A3C.
-- `evaluate.py`: A script for evaluating the performance of trained models in different environments.
+### `Listen.py`
+This file handles capturing and recognizing user input via voice. It uses the `speech_recognition` library to transcribe spoken words into text.
+
+### `Speak.py`
+The `Speak.py` module provides the functionality to convert text into speech. Using the `pyttsx3` library, it enables the chatbot to respond to the user audibly, enhancing user interaction.
+
+### `NeuralNetwork.py`
+Contains utility functions for preprocessing text:
+- **`tokenize()`**: Splits input sentences into individual words.
+- **`stem()`**: Applies stemming to reduce words to their root form.
+- **`bag_of_words()`**: Converts tokenized sentences into a binary vector representation (bag-of-words model), indicating the presence or absence of words in the input sentence.
+
+### `Train.py`
+The training script for the neural network. It processes the input data (intents and patterns), builds the training dataset, and trains the model using backpropagation. The trained model is then saved as `TrainData.pth` for future use.
+
+### `intents.json`
+Contains the dataset for training the chatbot. It includes predefined intents with corresponding patterns (user input examples) and responses. The chatbot learns to map patterns to the appropriate intent and select a corresponding response.
+
+Example of intent structure:
+```json
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": ["Hello", "Hi", "Hey"],
+      "responses": ["Hello!", "Hi there!", "Greetings!"]
+    }
+  ]
+}
 
 ## Installation
 
@@ -49,7 +83,7 @@ This repository includes the following key components:
    ```
 4. Run the training script:
    ```bash
-   python AI/train.py
+   python AI/Train.py
    ```
 
 ## Design Decisions
