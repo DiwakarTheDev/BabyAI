@@ -1,6 +1,6 @@
 # BabyAI
 
-#### Video Demo: [<URL HERE>](https://youtu.be/q90gdPnD_kE?feature=shared)
+#### Video Demo: (https://youtu.be/q90gdPnD_kE?feature=shared)
 
 #### Description:
 This project implements a conversational AI chatbot utilizing deep learning techniques, powered by PyTorch. The chatbot is designed to understand user input, classify it into predefined categories (intents), and provide contextually relevant responses. It features both text-based and voice-based interaction, allowing users to communicate through spoken language or typed commands.
